@@ -1,3 +1,5 @@
+package src.view;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -120,7 +122,7 @@ public class CadastroBanco extends JFrame{
         getContentPane().add(jbAtualizar);
 
         JButton jbFechar = new JButton("Fechar");
-        jbFechar.setBounds(225, 190, 100, 23);
+        jbFechar.setBounds(255, 190, 100, 23);
         jbFechar.setMnemonic(KeyEvent.VK_F);
         getContentPane().add(jbFechar);
 
