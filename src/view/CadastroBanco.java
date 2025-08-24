@@ -127,9 +127,4 @@ public class CadastroBanco extends JFrame{
         getContentPane().add(jbFechar);
 
     }
-
-    public static void main(String[] args) {
-        CadastroBanco cadastroBanco = new CadastroBanco();
-        cadastroBanco.setVisible(true);
-    }
 }

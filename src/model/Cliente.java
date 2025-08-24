@@ -1,7 +1,7 @@
 package src.model;
 
 public class Cliente extends Pessoa{
-    private int id;
+    private int id = 0;
 
     public Cliente(String nome, String endereco, String telefone, String cpf){
         super(nome, endereco, telefone, cpf);
