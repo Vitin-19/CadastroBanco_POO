@@ -1,26 +1,11 @@
 package src.view;
 
 import javax.swing.*;
-
-import src.controller.BotaoFechar;
-
 import java.awt.*;
-import java.awt.event.*;
 import java.awt.event.KeyEvent;
 
-public class CadastroBanco extends JPanel{
-    private void centralizar(){
-        Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
-        Dimension janela = getSize();
-
-        if (janela.height > screen.height) setSize(janela.width, screen.height);
-
-        if(janela.width > screen.width) setSize(screen.width, janela.height);
-
-        setLocation((screen.width - janela.width) / 2, (screen.height - janela.height) / 2);
-    }
-
-    public CadastroBanco(){
+public class CadastroUsuario extends JPanel{
+    public CadastroUsuario(){
         setLayout(null);
 
         // Instanciando os componentes
@@ -40,6 +25,7 @@ public class CadastroBanco extends JPanel{
 
         JTextField jtfConta = new JTextField();
         jtfConta.setBounds(315, 10, 60, 20);
+        jtfConta.setEnabled(false);
         add(jtfConta);
         
 
@@ -106,38 +92,11 @@ public class CadastroBanco extends JPanel{
         JSeparator jSeparator02 = new JSeparator();
         jSeparator02.setBounds(10, 180, 365, 10);
         add(jSeparator02);
-        
 
-        JButton jbConsultar = new JButton("Consultar");
-        jbConsultar.setBounds(35, 190, 100, 23);
-        jbConsultar.setMnemonic(KeyEvent.VK_S);
-        jbConsultar.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent event){
-                try{
-                    
-                }catch(Exception e){
-                    
-                }
-            }
-        });
-        add(jbConsultar);
-
-        JButton jbAtualizar = new JButton("Atualizar");
-        jbAtualizar.setBounds(145, 190, 100, 23);
-        jbAtualizar.setMnemonic(KeyEvent.VK_A);
-        add(jbAtualizar);
-
-        JButton jbFechar = new JButton("Fechar");
-        jbFechar.setBounds(255, 190, 100, 23);
-        jbFechar.setMnemonic(KeyEvent.VK_F);
-        jbFechar.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent event){
-                BotaoFechar botaoFechar = new BotaoFechar();
-                botaoFechar.fechar();
-            }
-        });
-        
-        add(jbFechar);
+        JButton jbCriar = new JButton("Criar");
+        jbCriar.setBounds(145, 190, 100, 23);
+        jbCriar.setMnemonic(KeyEvent.VK_C);
+        add(jbCriar);
 
     }
 }

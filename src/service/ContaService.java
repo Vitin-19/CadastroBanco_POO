@@ -59,6 +59,23 @@ public class ContaService implements Metodos<Conta>{
     }
 
     @Override
+    public Conta consultar(int numero) throws Exception{
+        if(numero <= 0){
+            throw new Exception("número inválido");
+        }
+
+        boolean achado = false;
+
+        for (int i = 0; i < contas.size(); i++) {
+            if(contas.get(i).getNumero() == numero) return contas.get(i);
+        }
+
+        if(!achado) throw new Exception("conta não achada");
+
+        return new Conta() {};
+    }
+
+    @Override
     public void cancelar(){
         return;
     }

@@ -1,8 +1,11 @@
-import src.view.CadastroBanco;
+import javax.swing.JFrame;
 
-public class Main {
+import src.view.MainPane;
+
+public class Main extends JFrame{
     public static void main(String[] args) {
-        CadastroBanco cadastroBanco = new CadastroBanco();
-        cadastroBanco.setVisible(true);
+        MainPane mainPane = new MainPane();
+
+        mainPane.setVisible(true);
     }
 }

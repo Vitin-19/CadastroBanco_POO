@@ -61,6 +61,20 @@ public class ClienteService implements Metodos<Cliente>{
     }
 
     @Override
+    public Cliente consultar(int id) throws Exception{
+        if(id <= 0) throw new Exception("id inválido");
+        
+        boolean achado = true;
+
+        for (int i = 0; i < clientes.size(); i++) {
+            if(clientes.get(i).getId() == id) return clientes.get(i);
+        }
+
+        if (!achado) throw new Exception("Cliente não achado");
+        return new Cliente(null, null, null, null);
+    }
+
+    @Override
     public void cancelar(){
         return;
     }

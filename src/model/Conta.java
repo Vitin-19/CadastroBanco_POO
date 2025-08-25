@@ -10,6 +10,7 @@ public abstract class Conta {
         this.numero = numero;
         this.saldo = saldo;
     }
+    public Conta(){}
 
     // get e set
 
