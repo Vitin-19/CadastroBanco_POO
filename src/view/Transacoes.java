@@ -1,10 +1,15 @@
 package src.view;
 
 import javax.swing.*;
+
+import src.controller.ContaController;
+
 import java.awt.*;
 import java.awt.event.*;
 
 public class Transacoes extends JPanel{
+    private final ContaController contaController = new ContaController();
+
     public Transacoes(){
         setLayout(null);
 
@@ -69,11 +74,37 @@ public class Transacoes extends JPanel{
         JButton jbSacar = new JButton("Sacar");
         jbSacar.setBounds(35, 190, 100, 23);
         jbSacar.setMnemonic(KeyEvent.VK_C);
+        jbSacar.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent event){
+                try{
+                    int agencia = Integer.parseInt(jtfAgencia.getText());
+                    int numero = Integer.parseInt(jtfConta.getText());
+                    double valor = Math.abs(Double.parseDouble(jtfValor.getText()));
+
+                    contaController.botaoSacar(agencia, numero, valor);
+                }catch(Exception e){
+                    JOptionPane.showMessageDialog(null, "Dados inválidos", "Falha na transação", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        });
         add(jbSacar);
 
         JButton jbDepositar = new JButton("Depositar");
         jbDepositar.setBounds(255, 190, 100, 23);
         jbDepositar.setMnemonic(KeyEvent.VK_F);
+        jbDepositar.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent event){
+                try{
+                    int agencia = Integer.parseInt(jtfAgencia.getText());
+                    int numero = Integer.parseInt(jtfConta.getText());
+                    double valor = Math.abs(Double.parseDouble(jtfValor.getText()));
+
+                    contaController.botaoDepositar(agencia, numero, valor);
+                }catch(Exception e){
+                    JOptionPane.showMessageDialog(null, "Dados inválidos", "Falha na transação", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        });
         add(jbDepositar);
     }
 }

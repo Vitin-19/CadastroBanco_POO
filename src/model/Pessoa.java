@@ -8,7 +8,7 @@ public abstract class Pessoa {
 
     public Pessoa(String nome, String endereco, String telefone, String cpf){
         this.nome = nome;
-        this.endereco = endereco;
+        this.endereco = endereco.toLowerCase();
         this.telefone = telefone;
         this.CPF = cpf;
     }
@@ -18,7 +18,7 @@ public abstract class Pessoa {
     public void setNome(String nome){ this.nome = nome.toUpperCase(); }
 
     public String getEndereco(){ return this.endereco; }
-    public void setEndereco(String endereco){ this.endereco = endereco; }
+    public void setEndereco(String endereco){ this.endereco = endereco.toLowerCase(); }
 
     public String getTelefone(){ return this.telefone; }
     public void setTelefone(String telefone){ this.telefone = telefone; }

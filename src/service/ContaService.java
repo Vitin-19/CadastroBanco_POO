@@ -6,15 +6,22 @@ import java.util.Random;
 import src.model.Conta;
 
 public class ContaService implements Metodos<Conta>{
-    ArrayList<Conta> contas = new ArrayList<Conta>();
+    private static ContaService instance;
+    private ArrayList<Conta> contas = new ArrayList<Conta>();
+
+    private ContaService(){};
+
+    public static ContaService getInstance(){
+        if (instance == null) instance = new ContaService();
+        return instance;
+    }
 
     @Override
-    public void gravar(Conta conta) throws Exception{
+    public Conta gravar(Conta conta) throws Exception{
         if(conta.getAgencia() <= 0){
             throw new Exception("Informações inválidas");
         }
 
-        System.out.println(conta.getClass());
         
         conta.setNumero(gerarNumero());
 
@@ -23,6 +30,8 @@ public class ContaService implements Metodos<Conta>{
         }
         
         contas.add(conta);
+        System.out.println(conta.getNumero());
+        return conta;
     }
 
     @Override
@@ -33,7 +42,6 @@ public class ContaService implements Metodos<Conta>{
 
         for (int i = 0; i < contas.size(); i++) {
             if(contas.get(i).getNumero() == conta.getNumero()){
-                contas.get(i).setSaldo(conta.getSaldo());
                 contas.get(i).setAgencia(conta.getAgencia());
             }
         }
@@ -42,7 +50,7 @@ public class ContaService implements Metodos<Conta>{
     @Override
     public void excluir(int numero) throws Exception{
         if(numero <= 0){
-            throw new Exception("número inválido");
+            throw new Exception("número invalido");
         }
 
         boolean achado = false;
@@ -61,23 +69,49 @@ public class ContaService implements Metodos<Conta>{
     @Override
     public Conta consultar(int numero) throws Exception{
         if(numero <= 0){
-            throw new Exception("número inválido");
+            throw new Exception("número invalido");
         }
-
-        boolean achado = false;
 
         for (int i = 0; i < contas.size(); i++) {
             if(contas.get(i).getNumero() == numero) return contas.get(i);
         }
 
-        if(!achado) throw new Exception("conta não achada");
-
-        return new Conta() {};
+        throw new Exception("conta não achada");
     }
 
     @Override
     public void cancelar(){
         return;
+    }
+
+    public void sacar(int agencia, int numero, double valor) throws Exception{
+        if(agencia <= 0 || numero <= 0){
+            throw new Exception("Informações inválidas");
+        }
+
+        for (int i = 0; i < contas.size(); i++) {
+            if(contas.get(i).getNumero() == numero){
+                contas.get(i).setSaldo(contas.get(i).getSaldo() - valor);
+                return;
+            }
+        }
+
+        throw new Exception("conta não achada");
+    }
+
+    public void depositar(int agencia, int numero, double valor) throws Exception{
+        if(agencia <= 0 || numero <= 0){
+            throw new Exception("Informações inválidas");
+        }
+
+        for (int i = 0; i < contas.size(); i++) {
+            if(contas.get(i).getNumero() == numero){
+                contas.get(i).setSaldo(contas.get(i).getSaldo() + valor);
+                return;
+            }
+        }
+
+        throw new Exception("conta não achada");
     }
 
     public int gerarNumero(){

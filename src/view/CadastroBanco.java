@@ -3,12 +3,20 @@ package src.view;
 import javax.swing.*;
 
 import src.controller.BotaoFechar;
+import src.controller.ClienteController;
+import src.controller.ContaController;
+import src.model.Cliente;
+import src.model.Conta;
+import src.model.ContaCorrente;
+import src.model.ContaPoupanca;
 
 import java.awt.*;
 import java.awt.event.*;
-import java.awt.event.KeyEvent;
 
 public class CadastroBanco extends JPanel{
+    private final ContaController contaController = new ContaController();
+    private final ClienteController clienteController = new ClienteController();
+
     private void centralizar(){
         Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
         Dimension janela = getSize();
@@ -18,6 +26,10 @@ public class CadastroBanco extends JPanel{
         if(janela.width > screen.width) setSize(screen.width, janela.height);
 
         setLocation((screen.width - janela.width) / 2, (screen.height - janela.height) / 2);
+    }
+
+    public boolean haSomenteNumeros(String txt){
+        return txt != null && txt.matches("\\d+");
     }
 
     public CadastroBanco(){
@@ -91,11 +103,13 @@ public class CadastroBanco extends JPanel{
         jrbCorrente.setBounds(100, 150, 111, 20);
         jrbCorrente.setSelected(true);
         jrbCorrente.setMnemonic(KeyEvent.VK_C);
+        jrbCorrente.setActionCommand("Conta Corrente");
         add(jrbCorrente);
 
         JRadioButton jrbPoupanca = new JRadioButton("Conta Poupança");
         jrbPoupanca.setBounds(225, 150, 118, 20);
         jrbPoupanca.setMnemonic(KeyEvent.VK_P);
+        jrbPoupanca.setActionCommand("Conta Poupança");
         add(jrbPoupanca);
 
         ButtonGroup bgContas = new ButtonGroup();
@@ -113,19 +127,59 @@ public class CadastroBanco extends JPanel{
         jbConsultar.setMnemonic(KeyEvent.VK_S);
         jbConsultar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent event){
-                try{
-                    
-                }catch(Exception e){
-                    
+                Conta conta = null;
+
+                switch(bgContas.getSelection().getActionCommand()){
+                    case "Conta Corrente":
+                        try{
+                            int Agencia = Integer.parseInt(jtfAgencia.getText());
+                            int numero = Integer.parseInt(jtfConta.getText());
+                            conta = new ContaCorrente(Agencia, numero, 0);
+                        }catch(Exception e){
+                            JOptionPane.showMessageDialog(null, "Dados inválidos", "Falha na consulta", JOptionPane.ERROR_MESSAGE);
+                            return;
+                        }
+                        break;
+                    case "Conta Poupança":
+                        try{
+                            int Agencia = Integer.parseInt(jtfAgencia.getText());
+                            int numero = Integer.parseInt(jtfConta.getText());
+                            conta = new ContaPoupanca(Agencia, numero, 0);
+                        }catch(Exception e){
+                            JOptionPane.showMessageDialog(null, "Dados inválidos", "Falha na consulta", JOptionPane.ERROR_MESSAGE);
+                            return;
+                        }
+                        break;
                 }
+                String nome = jtfNome.getText().toUpperCase();
+                String endereco = jtfEndereco.getText().toLowerCase();
+                String telefone = jtfTelefone.getText();
+                String cpf = jtfCPF.getText();
+
+                contaController.botaoConsultar(conta, new Cliente(nome, endereco, telefone, cpf));
             }
         });
         add(jbConsultar);
 
-        JButton jbAtualizar = new JButton("Atualizar");
+        JButton jbAtualizar = new JButton("Atualizar cliente");
         jbAtualizar.setBounds(145, 190, 100, 23);
         jbAtualizar.setMnemonic(KeyEvent.VK_A);
         add(jbAtualizar);
+        jbAtualizar.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent event){
+                String nome = jtfNome.getText().toUpperCase();
+                String endereco = jtfEndereco.getText().toLowerCase();
+                String telefone = jtfTelefone.getText();
+                String cpf = jtfCPF.getText();
+
+                if(telefone.length() != 11 || cpf.length() != 11 || !haSomenteNumeros(cpf) ||!haSomenteNumeros(telefone)){
+                    JOptionPane.showMessageDialog(null, "Telefone e cpf devem possuir apenas 11 valors numéricos", "Falha na consulta", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+                
+                clienteController.botaoAtualizar(new Cliente(nome, endereco, telefone, cpf));
+            }
+        });
 
         JButton jbFechar = new JButton("Fechar");
         jbFechar.setBounds(255, 190, 100, 23);
